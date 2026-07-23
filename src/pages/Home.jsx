@@ -1,33 +1,29 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar } from 'lucide-react';
 import { Hero } from '../features/home/Hero';
 import { MarqueeBanner } from '../features/home/MarqueeBanner';
-import { AboutSection } from '../features/home/AboutSection';
-import { SignatureMenu } from '../features/menu/SignatureMenu';
-import { WhyChooseUs } from '../features/home/WhyChooseUs';
-import { RoastSlider } from '../features/roast-story/RoastSlider';
-import { CoffeeProcess } from '../features/roast-story/CoffeeProcess';
-import { GallerySection } from '../features/gallery/GallerySection';
-import { TestimonialsSection } from '../features/home/TestimonialsSection';
-import { StatsSection } from '../features/home/StatsSection';
+import { SeasonalReserve } from '../features/home/SeasonalReserve';
+import { CafeExperience } from '../features/home/CafeExperience';
+import { Workshops } from '../features/home/Workshops';
+import { MerchandisePreview } from '../features/home/MerchandisePreview';
+import { JournalPreview } from '../features/home/JournalPreview';
+import { Link } from 'react-router-dom';
+import { Calendar, ArrowRight } from 'lucide-react';
 
 export const Home = () => {
   return (
     <div className="bg-[#08060A]">
+      {/* Top Banner and Hero remain as they are */}
       <Hero />
       <MarqueeBanner />
-      <AboutSection />
-      <SignatureMenu />
-      <WhyChooseUs />
-      <RoastSlider />
-      <CoffeeProcess />
-      <GallerySection />
-      <TestimonialsSection />
-      <StatsSection />
 
-      {/* Reservation CTA Banner */}
+      {/* New Premium Homepage Flow */}
+      <SeasonalReserve />
+      <CafeExperience />
+      <Workshops />
+      <MerchandisePreview />
+      <JournalPreview />
+
+      {/* Refined Reservation CTA Banner */}
       <section className="py-28 bg-[#0E0C12] border-t border-[#C9A96E]/15 relative overflow-hidden text-center">
         <div className="max-w-4xl mx-auto px-6 relative z-10 space-y-6">
           <div className="w-12 h-12 rounded-full border border-[#C9A96E]/30 flex items-center justify-center mx-auto text-[#C9A96E]">
