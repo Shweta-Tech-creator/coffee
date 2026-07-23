@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+
+// Check immediately — not in an effect — to avoid flicker
+const isTouchDevice = () =>
+  typeof window !== 'undefined' &&
+  (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
 
 export const CustomCursor = () => {
+  // Return null immediately for touch/mobile devices — no hooks needed before this
+  // We keep hooks outside the conditional to satisfy React's rules of hooks
   const [position, setPosition] = useState({ x: -100, y: -100 });
   const [trailingPos, setTrailingPos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [cursorText, setCursorText] = useState('');
-  const [isMobile, setIsMobile] = useState(false);
+  const isTouch = useRef(isTouchDevice());
 
   useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window) {
-      setIsMobile(true);
-    }
-  }, []);
+    if (isTouch.current) return;
 
-  useEffect(() => {
-    if (isMobile) return;
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
-
     const handleMouseDown = () => setIsClicking(true);
     const handleMouseUp = () => setIsClicking(false);
 
@@ -34,22 +35,29 @@ export const CustomCursor = () => {
     };
   }, []);
 
-  // Smooth trailing effect
+  // Smooth trailing effect — skip on touch devices
   useEffect(() => {
+    if (isTouch.current) return;
+
     let animationFrameId;
+    const posRef = { x: position.x, y: position.y };
+
     const render = () => {
-      setTrailingPos(prev => ({
-        x: prev.x + (position.x - prev.x) * 0.18,
-        y: prev.y + (position.y - prev.y) * 0.18
-      }));
+      setTrailingPos(prev => {
+        const nx = prev.x + (position.x - prev.x) * 0.18;
+        const ny = prev.y + (position.y - prev.y) * 0.18;
+        return { x: nx, y: ny };
+      });
       animationFrameId = requestAnimationFrame(render);
     };
+
     animationFrameId = requestAnimationFrame(render);
     return () => cancelAnimationFrame(animationFrameId);
   }, [position]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isTouch.current) return;
+
     const handleElementHover = () => {
       const hoverables = document.querySelectorAll('a, button, [data-cursor-hover]');
       hoverables.forEach((el) => {
@@ -69,9 +77,10 @@ export const CustomCursor = () => {
     const observer = new MutationObserver(handleElementHover);
     observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, [isMobile]);
+  }, []);
 
-  if (isMobile) return null;
+  // Don't render anything on touch/mobile
+  if (isTouch.current) return null;
 
   return (
     <>
@@ -97,7 +106,7 @@ export const CustomCursor = () => {
 
       {/* Trailing Soft Halo Ring */}
       <div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] transition-opacity duration-300 flex items-center justify-center"
+        className="fixed top-0 left-0 pointer-events-none z-[9998] flex items-center justify-center"
         style={{
           transform: `translate3d(${trailingPos.x}px, ${trailingPos.y}px, 0) translate(-50%, -50%)`,
           width: isHovered ? '56px' : '36px',
