@@ -6,8 +6,16 @@ export const CustomCursor = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [cursorText, setCursorText] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window) {
+      setIsMobile(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
@@ -41,6 +49,7 @@ export const CustomCursor = () => {
   }, [position]);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleElementHover = () => {
       const hoverables = document.querySelectorAll('a, button, [data-cursor-hover]');
       hoverables.forEach((el) => {
@@ -60,7 +69,9 @@ export const CustomCursor = () => {
     const observer = new MutationObserver(handleElementHover);
     observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <>
