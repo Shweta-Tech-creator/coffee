@@ -15,7 +15,7 @@ export const GallerySection = () => {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="gallery" ref={ref} className="relative py-36 bg-[#08060A]">
+    <section id="gallery" ref={ref} className="relative py-36 bg-[var(--bg)]">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
         {/* Header */}
         <motion.div
@@ -26,16 +26,16 @@ export const GallerySection = () => {
         >
           <div>
             <div className="flex items-center gap-4 mb-6">
-              <div className="h-px w-10 bg-[#C9A96E]" />
-              <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase">Visual Journal</span>
+              <div className="h-px w-10 bg-[var(--primary)]" />
+              <span className="font-mono-custom text-[var(--primary)] text-[10px] tracking-[0.4em] uppercase">Visual Journal</span>
             </div>
-            <h2 className="font-display text-5xl lg:text-6xl text-[#EDE4D6] font-light leading-[1.05]">
-              Life Inside<br /><em className="text-[#C9A96E]">Bean Haven.</em>
+            <h2 className="font-display text-5xl lg:text-6xl text-[var(--text)] font-light leading-[1.05]">
+              Life Inside<br /><em className="text-[var(--primary)]">Bean Haven.</em>
             </h2>
           </div>
           <a
             href="/gallery"
-            className="hidden lg:flex items-center gap-3 font-mono-custom text-[10px] tracking-[0.3em] uppercase text-[#5A5040] hover:text-[#C9A96E] transition-colors group"
+            className="hidden lg:flex items-center gap-3 font-mono-custom text-[10px] tracking-[0.3em] uppercase text-[var(--muted)] hover:text-[var(--primary)] transition-colors group"
           >
             <div className="h-px w-10 bg-current group-hover:w-16 transition-all" />
             Full Gallery
@@ -59,10 +59,10 @@ export const GallerySection = () => {
                 initial={false}
               >
                 <p className="font-display text-white text-lg font-light">{img.cap}</p>
-                <div className="mt-1 h-px w-0 group-hover:w-full bg-[#C9A96E] transition-all duration-500" />
+                <div className="mt-1 h-px w-0 group-hover:w-full bg-[var(--primary)] transition-all duration-500" />
               </motion.div>
               {/* Corner marker */}
-              <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-[#C9A96E]/0 group-hover:border-[#C9A96E]/60 transition-all duration-400" />
+              <div className="absolute top-3 right-3 w-5 h-5 border-t border-r border-[var(--primary)]/0 group-hover:border-[var(--primary)]/60 transition-all duration-400" />
             </motion.div>
           ))}
         </div>

@@ -8,7 +8,7 @@ export const CartDrawer = () => {
   const { items, isOpen, setIsOpen, updateQuantity, removeFromCart, clearCart } = useCart();
   const [isCheckedOut, setIsCheckedOut] = useState(false);
   
-  // Checkout Form State
+  // Form State
   const [customerName, setCustomerName] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -22,14 +22,10 @@ export const CartDrawer = () => {
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  // Animate tracker stages after checkout
   useEffect(() => {
     let timers = [];
     if (isCheckedOut) {
-      // Stage 0: Order Received (Immediate)
-      // Stage 1: Preparing (after 2s)
       timers.push(setTimeout(() => setTrackerStage(1), 2000));
-      // Stage 2: Ready / Out for delivery (after 5s for demo purposes)
       timers.push(setTimeout(() => setTrackerStage(2), 5000));
     }
     return () => timers.forEach(t => clearTimeout(t));
@@ -71,10 +67,10 @@ export const CartDrawer = () => {
         particleCount: 120,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ['#C9A96E', '#E8CC8A', '#8C7040']
+        colors: ['#B8935A', '#FFD700', '#C9A96E']
       });
     } catch (err) {
-      setCheckoutError('Order transmission failed. Please try again or check connection.');
+      setCheckoutError('Order transmission failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -107,7 +103,7 @@ export const CartDrawer = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeDrawer}
-            className="fixed inset-0 bg-[#08060A]/80 backdrop-blur-md z-[200]"
+            className="fixed inset-0 bg-[var(--bg)]/80 backdrop-blur-md z-[200]"
           />
 
           {/* Drawer */}
@@ -116,20 +112,20 @@ export const CartDrawer = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-[#0E0C12] border-l border-[#C9A96E]/20 z-[201] p-8 flex flex-col justify-between overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-[var(--surface)] border-l border-[var(--accent)]/20 z-[201] p-6 sm:p-8 flex flex-col justify-between overflow-y-auto shadow-2xl"
           >
             {/* Header */}
             <div>
-              <div className="flex items-center justify-between pb-6 border-b border-[#C9A96E]/15">
+              <div className="flex items-center justify-between pb-5 border-b border-[var(--accent)]/15">
                 <div className="flex items-center gap-3">
-                  <ShoppingBag size={18} className="text-[#C9A96E]" />
-                  <h3 className="font-display text-2xl text-[#EDE4D6] font-light">
-                    {isCheckedOut ? 'Order Status' : 'Order Selection'}
+                  <ShoppingBag size={18} className="text-[var(--accent)]" />
+                  <h3 className="font-display text-2xl text-[var(--text)] font-medium">
+                    {isCheckedOut ? 'Order Tracker' : 'Your Order Tray'}
                   </h3>
                 </div>
                 <button
                   onClick={closeDrawer}
-                  className="p-2 text-[#7A6F65] hover:text-[#EDE4D6] transition-colors"
+                  className="p-2 text-[var(--muted)] hover:text-[var(--text)] transition-colors rounded-xl hover:bg-[var(--surface)]"
                 >
                   <X size={20} />
                 </button>
@@ -137,110 +133,97 @@ export const CartDrawer = () => {
 
               {isCheckedOut ? (
                 <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="py-12 flex flex-col h-full"
+                  className="py-10 flex flex-col h-full"
                 >
-                  <div className="text-center mb-10">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", bounce: 0.5 }}
-                    >
-                      <CheckCircle className="w-16 h-16 text-[#C9A96E] mx-auto mb-4" />
-                    </motion.div>
-                    <h4 className="font-display text-3xl text-[#EDE4D6] font-light mb-2">Order Confirmed</h4>
-                    <div className="flex items-center justify-center gap-2 text-[#C9A96E] font-mono-custom text-xs">
+                  <div className="text-center mb-8">
+                    <CheckCircle className="w-16 h-16 text-[var(--accent)] mx-auto mb-3" />
+                    <h4 className="font-display text-3xl text-[var(--text)] font-medium mb-1">Order Confirmed</h4>
+                    <div className="flex items-center justify-center gap-2 text-[var(--accent)] font-mono-custom text-xs font-semibold">
                       <Clock size={14} />
                       <span>Estimated Arrival: {estimatedTime} mins</span>
                     </div>
                   </div>
 
-                  {/* Live Tracker Timeline */}
-                  <div className="relative space-y-8 pl-4 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-[#C9A96E]/40 before:to-transparent">
-                    {/* Stage 0 */}
-                    <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                      <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${trackerStage >= 0 ? 'bg-[#C9A96E] border-[#C9A96E] text-[#08060A]' : 'bg-[#08060A] border-[#7A6F65] text-[#7A6F65]'} shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors duration-500`}>
+                  {/* Tracker Timeline */}
+                  <div className="relative space-y-6 pl-4 before:absolute before:inset-0 before:left-3.5 before:h-full before:w-0.5 before:bg-[var(--accent)]/30">
+                    <div className="relative flex items-start gap-4">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${trackerStage >= 0 ? 'bg-[var(--accent)] text-[var(--bg)]' : 'bg-[var(--surface)] text-[var(--muted)]'}`}>
                         <CheckCircle size={14} />
                       </div>
-                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] px-4">
-                        <h5 className={`font-mono-custom text-[10px] tracking-widest uppercase font-bold ${trackerStage >= 0 ? 'text-[#EDE4D6]' : 'text-[#7A6F65]'}`}>Order Received</h5>
-                        <p className="text-[10px] text-[#7A6F65] mt-1">Transmitted to head barista.</p>
+                      <div>
+                        <h5 className="font-mono-custom text-xs uppercase font-bold text-[var(--text)]">Order Received</h5>
+                        <p className="text-xs text-[var(--muted)]">Transmitted to barista.</p>
                       </div>
                     </div>
 
-                    {/* Stage 1 */}
-                    <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                      <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${trackerStage >= 1 ? 'bg-[#C9A96E] border-[#C9A96E] text-[#08060A]' : 'bg-[#08060A] border-[#7A6F65] text-[#7A6F65]'} shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors duration-500`}>
-                        {trackerStage === 1 ? (
-                           <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: "linear" }}>
-                             <Coffee size={14} />
-                           </motion.div>
-                        ) : <Coffee size={14} />}
+                    <div className="relative flex items-start gap-4">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${trackerStage >= 1 ? 'bg-[var(--accent)] text-[var(--bg)]' : 'bg-[var(--surface)] text-[var(--muted)]'}`}>
+                        <Coffee size={14} />
                       </div>
-                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] px-4">
-                        <h5 className={`font-mono-custom text-[10px] tracking-widest uppercase font-bold ${trackerStage >= 1 ? 'text-[#EDE4D6]' : 'text-[#7A6F65]'}`}>Grinding & Extracting</h5>
-                        <p className="text-[10px] text-[#7A6F65] mt-1">Dialing in your espresso.</p>
+                      <div>
+                        <h5 className="font-mono-custom text-xs uppercase font-bold text-[var(--text)]">Brewing & Extracting</h5>
+                        <p className="text-xs text-[var(--muted)]">Dialing in single origin espresso.</p>
                       </div>
                     </div>
 
-                    {/* Stage 2 */}
-                    <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                      <div className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${trackerStage >= 2 ? 'bg-[#C9A96E] border-[#C9A96E] text-[#08060A]' : 'bg-[#08060A] border-[#7A6F65] text-[#7A6F65]'} shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors duration-500`}>
+                    <div className="relative flex items-start gap-4">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${trackerStage >= 2 ? 'bg-[var(--accent)] text-[var(--bg)]' : 'bg-[var(--surface)] text-[var(--muted)]'}`}>
                         <Truck size={14} />
                       </div>
-                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] px-4">
-                        <h5 className={`font-mono-custom text-[10px] tracking-widest uppercase font-bold ${trackerStage >= 2 ? 'text-[#EDE4D6]' : 'text-[#7A6F65]'}`}>Out For Delivery</h5>
-                        <p className="text-[10px] text-[#7A6F65] mt-1">Speeding to {deliveryAddress || 'your address'}.</p>
+                      <div>
+                        <h5 className="font-mono-custom text-xs uppercase font-bold text-[var(--text)]">Out For Delivery</h5>
+                        <p className="text-xs text-[var(--muted)]">On the way to {deliveryAddress || 'your location'}.</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-12 text-center">
+                  <div className="mt-10 text-center">
                     <button
                       onClick={closeDrawer}
-                      className="px-6 py-3 border border-[#C9A96E]/30 text-[#C9A96E] hover:bg-[#C9A96E] hover:text-[#08060A] transition-colors font-mono-custom text-[10px] tracking-[0.2em] uppercase font-bold"
+                      className="px-6 py-3 bg-[var(--accent)] text-[var(--bg)] rounded-xl font-mono-custom text-xs font-bold"
                     >
                       Close Tracker
                     </button>
                   </div>
                 </motion.div>
               ) : items.length === 0 ? (
-                <div className="py-24 text-center">
-                  <ShoppingBag size={48} className="text-[#C9A96E]/20 mx-auto mb-4" />
-                  <p className="font-display text-2xl text-[#EDE4D6] font-light mb-2">Your Tray is Empty</p>
-                  <p className="font-mono-custom text-xs text-[#7A6F65]">Explore our artisanal single-origin menu to add items.</p>
+                <div className="py-20 text-center">
+                  <ShoppingBag size={44} className="text-[var(--accent)]/30 mx-auto mb-3" />
+                  <p className="font-display text-2xl text-[var(--text)] font-medium mb-1">Your Tray is Empty</p>
+                  <p className="text-xs text-[var(--muted)]">Select artisanal coffee or sourdough items from the menu.</p>
                 </div>
               ) : (
-                <div className="py-6 space-y-6 max-h-[35vh] overflow-y-auto pr-2 custom-scrollbar">
+                <div className="py-5 space-y-4 max-h-[35vh] overflow-y-auto pr-1">
                   {items.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between border-b border-[#C9A96E]/10 pb-4">
-                      <div className="flex items-center gap-4">
-                        <img src={item.img} alt={item.name} className="w-12 h-12 object-cover border border-[#C9A96E]/20" />
+                    <div key={item.id} className="flex items-center justify-between border-b border-[var(--accent)]/10 pb-3">
+                      <div className="flex items-center gap-3">
+                        <img src={item.img} alt={item.name} className="w-12 h-12 rounded-xl object-cover border border-[var(--accent)]/20 bg-[var(--surface)]" />
                         <div>
-                          <h4 className="font-display text-sm text-[#EDE4D6] font-light">{item.name}</h4>
-                          <p className="font-mono-custom text-[10px] text-[#C9A96E]">${item.price.toFixed(2)}</p>
+                          <h4 className="font-display text-base text-[var(--text)] font-medium">{item.name}</h4>
+                          <p className="font-mono-custom text-xs text-[var(--accent)] font-semibold">${item.price.toFixed(2)}</p>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center border border-[#C9A96E]/20">
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center border border-[var(--accent)]/20 rounded-lg overflow-hidden bg-[var(--bg)]">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="p-1 text-[#7A6F65] hover:text-[#EDE4D6]"
+                            className="p-1 text-[var(--muted)] hover:text-[var(--text)]"
                           >
-                            <Minus size={10} />
+                            <Minus size={12} />
                           </button>
-                          <span className="font-mono-custom text-[10px] text-[#EDE4D6] px-2">{item.quantity}</span>
+                          <span className="font-mono-custom text-xs text-[var(--text)] px-2 font-medium">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="p-1 text-[#7A6F65] hover:text-[#EDE4D6]"
+                            className="p-1 text-[var(--muted)] hover:text-[var(--text)]"
                           >
-                            <Plus size={10} />
+                            <Plus size={12} />
                           </button>
                         </div>
-                        <button onClick={() => removeFromCart(item.id)} className="text-[#7A6F65] hover:text-red-400">
-                          <Trash2 size={12} />
+                        <button onClick={() => removeFromCart(item.id)} className="text-[var(--muted)] hover:text-red-400 p-1">
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     </div>
@@ -249,80 +232,71 @@ export const CartDrawer = () => {
               )}
             </div>
 
-            {/* Footer / Checkout Details */}
+            {/* Footer / Checkout Form */}
             {!isCheckedOut && items.length > 0 && (
-              <div className="pt-6 border-t border-[#C9A96E]/15">
-                <h4 className="font-mono-custom text-[10px] text-[#C9A96E] uppercase tracking-widest mb-4">Delivery Details</h4>
-                {/* Form Fields */}
-                <div className="space-y-3 mb-6">
+              <div className="pt-5 border-t border-[var(--accent)]/15 space-y-4">
+                <h4 className="font-mono-custom text-xs text-[var(--accent)] uppercase tracking-wider font-semibold">Delivery Details</h4>
+                <div className="space-y-3">
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6F65] w-4 h-4" />
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)] w-4 h-4" />
                     <input 
                       type="text" 
                       placeholder="Full Name" 
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full bg-[#08060A] border border-[#C9A96E]/20 text-[#EDE4D6] pl-10 pr-4 py-3 font-mono-custom text-xs focus:outline-none focus:border-[#C9A96E]/60 transition-colors"
+                      className="w-full bg-[var(--bg)] border border-[var(--accent)]/20 rounded-xl text-[var(--text)] pl-10 pr-4 py-2.5 font-mono-custom text-xs focus:outline-none focus:border-[var(--accent)]"
                     />
                   </div>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6F65] w-4 h-4" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)] w-4 h-4" />
                     <input 
                       type="email" 
                       placeholder="Email Address" 
                       value={customerEmail}
                       onChange={(e) => setCustomerEmail(e.target.value)}
-                      className="w-full bg-[#08060A] border border-[#C9A96E]/20 text-[#EDE4D6] pl-10 pr-4 py-3 font-mono-custom text-xs focus:outline-none focus:border-[#C9A96E]/60 transition-colors"
+                      className="w-full bg-[var(--bg)] border border-[var(--accent)]/20 rounded-xl text-[var(--text)] pl-10 pr-4 py-2.5 font-mono-custom text-xs focus:outline-none focus:border-[var(--accent)]"
                     />
                   </div>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6F65] w-4 h-4" />
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)] w-4 h-4" />
                     <input 
                       type="tel" 
                       placeholder="Phone Number" 
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className="w-full bg-[#08060A] border border-[#C9A96E]/20 text-[#EDE4D6] pl-10 pr-4 py-3 font-mono-custom text-xs focus:outline-none focus:border-[#C9A96E]/60 transition-colors"
+                      className="w-full bg-[var(--bg)] border border-[var(--accent)]/20 rounded-xl text-[var(--text)] pl-10 pr-4 py-2.5 font-mono-custom text-xs focus:outline-none focus:border-[var(--accent)]"
                     />
                   </div>
                   <div className="relative">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6F65] w-4 h-4" />
+                    <MapPin className="absolute left-3 top-3 text-[var(--muted)] w-4 h-4" />
                     <textarea 
                       placeholder="Delivery Address" 
                       rows="2"
                       value={deliveryAddress}
                       onChange={(e) => setDeliveryAddress(e.target.value)}
-                      className="w-full bg-[#08060A] border border-[#C9A96E]/20 text-[#EDE4D6] pl-10 pr-4 py-3 font-mono-custom text-xs focus:outline-none focus:border-[#C9A96E]/60 transition-colors resize-none"
+                      className="w-full bg-[var(--bg)] border border-[var(--accent)]/20 rounded-xl text-[var(--text)] pl-10 pr-4 py-2.5 font-mono-custom text-xs focus:outline-none focus:border-[var(--accent)] resize-none"
                     />
                   </div>
                 </div>
 
                 {checkoutError && (
-                  <div className="flex items-center gap-2 text-red-400 font-mono-custom text-[10px] mb-4">
+                  <div className="flex items-center gap-2 text-red-400 font-mono-custom text-xs">
                     <AlertCircle size={12} />
                     {checkoutError}
                   </div>
                 )}
 
-                <div className="flex justify-between items-center font-display text-xl text-[#EDE4D6] mb-4">
+                <div className="flex justify-between items-center font-display text-xl text-[var(--text)]">
                   <span>Subtotal</span>
-                  <span className="text-[#C9A96E]">${subtotal.toFixed(2)}</span>
+                  <span className="text-[var(--accent)] font-semibold">${subtotal.toFixed(2)}</span>
                 </div>
                 
                 <button
                   onClick={handleCheckout}
                   disabled={isSubmitting}
-                  className={`w-full py-4 bg-[#C9A96E] text-[#08060A] font-mono-custom text-[10px] tracking-[0.3em] uppercase font-bold transition-colors flex justify-center items-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-[#E8CC8A]'}`}
+                  className={`w-full py-3.5 bg-[var(--accent)] text-[var(--bg)] rounded-2xl font-mono-custom text-xs tracking-wider uppercase font-bold hover:bg-[var(--highlight)] transition-colors flex justify-center items-center shadow-lg shadow-[var(--accent)]/20 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
-                  {isSubmitting ? (
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-4 h-4 border-2 border-[#08060A] border-t-transparent rounded-full"
-                    />
-                  ) : (
-                    'Place Order'
-                  )}
+                  {isSubmitting ? 'Processing...' : 'Place Order'}
                 </button>
               </div>
             )}

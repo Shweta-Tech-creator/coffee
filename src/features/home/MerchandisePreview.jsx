@@ -25,19 +25,19 @@ const PRODUCTS = [
 
 export const MerchandisePreview = () => {
   return (
-    <section className="py-24 sm:py-32 bg-[#0A0810] border-t border-[#C9A96E]/15">
+    <section className="py-24 sm:py-32 bg-[var(--bg)] border-t border-[var(--primary)]/15">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-20">
         
         <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-6">
           <div>
-            <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase block mb-4">
+            <span className="font-mono-custom text-[var(--primary)] text-[10px] tracking-[0.4em] uppercase block mb-4">
               Curated Goods
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-[#EDE4D6]">
-              Elevate Your <em className="text-[#C9A96E]">Ritual</em>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-[var(--text)]">
+              Elevate Your <em className="text-[var(--primary)]">Ritual</em>
             </h2>
           </div>
-          <a href="#" className="inline-flex items-center gap-3 text-[#C9A96E] font-mono-custom text-[10px] tracking-[0.25em] uppercase hover:text-[#E8CC8A] transition-colors pb-2 border-b border-[#C9A96E]/30 hover:border-[#C9A96E]">
+          <a href="#" className="inline-flex items-center gap-3 text-[var(--primary)] font-mono-custom text-[10px] tracking-[0.25em] uppercase hover:text-[var(--highlight)] transition-colors pb-2 border-b border-[var(--primary)]/30 hover:border-[var(--primary)]">
             Shop All Collections <ArrowRight size={14} />
           </a>
         </div>
@@ -52,7 +52,7 @@ export const MerchandisePreview = () => {
               transition={{ duration: 0.6, delay: i * 0.15 }}
               className="group cursor-pointer"
             >
-              <div className="relative aspect-[4/5] bg-[#0E0C12] border border-[#C9A96E]/15 overflow-hidden mb-6">
+              <div className="relative aspect-[4/5] bg-[var(--surface)] border border-[var(--primary)]/15 overflow-hidden mb-6">
                 <img 
                   src={product.img} 
                   alt={product.name}
@@ -60,8 +60,8 @@ export const MerchandisePreview = () => {
                 />
                 
                 {/* Overlay Add to Cart button */}
-                <div className="absolute inset-0 bg-[#08060A]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="flex items-center gap-2 bg-[#C9A96E] text-[#08060A] px-6 py-3 font-mono-custom text-[10px] tracking-[0.2em] uppercase font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <div className="absolute inset-0 bg-[var(--bg)]/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <button className="flex items-center gap-2 bg-[var(--primary)] text-[var(--bg)] px-6 py-3 font-mono-custom text-[10px] tracking-[0.2em] uppercase font-bold transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <ShoppingBag size={14} /> Add to Cart
                   </button>
                 </div>
@@ -69,10 +69,10 @@ export const MerchandisePreview = () => {
               
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-display text-2xl text-[#EDE4D6] mb-1 group-hover:text-[#C9A96E] transition-colors">{product.name}</h3>
-                  <p className="font-mono-custom text-[9px] text-[#7A6F65] tracking-widest uppercase">{product.category}</p>
+                  <h3 className="font-display text-2xl text-[var(--text)] mb-1 group-hover:text-[var(--primary)] transition-colors">{product.name}</h3>
+                  <p className="font-mono-custom text-[9px] text-[var(--muted)] tracking-widest uppercase">{product.category}</p>
                 </div>
-                <span className="font-mono-custom text-sm text-[#C9A96E]">{product.price}</span>
+                <span className="font-mono-custom text-sm text-[var(--primary)]">{product.price}</span>
               </div>
             </motion.div>
           ))}

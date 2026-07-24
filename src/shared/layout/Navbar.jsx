@@ -31,31 +31,48 @@ export const Navbar = () => {
     <>
       <motion.header
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
-          scrolled ? 'bg-[#08060A]/90 backdrop-blur-xl border-b border-[#C9A96E]/10' : 'bg-transparent'
+          scrolled
+            ? 'bg-[var(--surface)]/90 backdrop-blur-xl border-b border-[var(--primary)]/20 shadow-sm'
+            : 'bg-transparent'
         }`}
         initial={{ y: -80 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 0.8 }}
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="group flex flex-col leading-none">
-            <span className="font-display text-2xl text-[#EDE4D6] font-light tracking-tight group-hover:text-[#C9A96E] transition-colors duration-300">
-              Bean Haven
-            </span>
-            <span className="font-mono-custom text-[9px] text-[#C9A96E]/60 tracking-[0.35em] uppercase mt-0.5">
-              Café & Roastery
-            </span>
+          
+          {/* Enhanced Logo */}
+          <Link to="/" className="group flex items-center gap-3">
+            {/* Custom Bean Haven Logo Mark */}
+            <div className="relative w-10 h-10 flex-shrink-0">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                <circle cx="20" cy="20" r="19" fill="var(--primary)" stroke="var(--accent)" strokeWidth="1"/>
+                <ellipse cx="20" cy="20" rx="9" ry="13" fill="#7C3F00" opacity="0.9" transform="rotate(-20 20 20)"/>
+                <path d="M20 10 Q24 20 20 30" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+              </svg>
+            </div>
+            
+            {/* Brand Text */}
+            <div className="leading-none">
+              <span className="font-display text-xl font-semibold tracking-tight text-[var(--text)] group-hover:text-[var(--primary)] transition-colors duration-300 block">
+                Bean Haven
+              </span>
+              <span className="font-mono-custom text-[9px] text-[var(--primary)]/80 tracking-[0.25em] uppercase font-semibold mt-0.5 block">
+                Café & Roastery
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-10">
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map(({ label, path }) => (
               <Link
                 key={path}
                 to={path}
-                className={`underline-slide font-mono-custom text-[10px] tracking-[0.25em] uppercase transition-colors duration-300 ${
-                  pathname === path ? 'text-[#C9A96E]' : 'text-[#7A6F65] hover:text-[#EDE4D6]'
+                className={`font-mono-custom text-xs font-semibold tracking-wider uppercase transition-colors duration-200 pb-0.5 border-b-2 ${
+                  pathname === path
+                    ? 'text-[var(--primary)] border-[var(--primary)]'
+                    : 'text-[var(--muted)] hover:text-[var(--text)] border-transparent'
                 }`}
               >
                 {label}
@@ -64,19 +81,20 @@ export const Navbar = () => {
           </nav>
 
           {/* Right: Cart + Hamburger */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
+            {/* Enlarged Cart Icon */}
             <button
               onClick={() => setCartOpen(true)}
-              className="relative p-2 text-[#7A6F65] hover:text-[#C9A96E] transition-colors duration-200"
+              className="relative p-3 text-[var(--muted)] hover:text-[var(--primary)] transition-colors rounded-2xl hover:bg-[var(--surface)] group"
               aria-label="Open cart"
             >
-              <ShoppingCart size={18} />
+              <ShoppingCart size={24} strokeWidth={2} />
               {cartCount > 0 && (
                 <motion.span
                   key={cartCount}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#C9A96E] text-[#08060A] text-[9px] font-bold font-mono-custom rounded-full flex items-center justify-center"
+                  initial={{ scale: 0, rotate: -10 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  className="absolute -top-1 -right-1 min-w-[22px] h-[22px] bg-[var(--primary)] text-white text-[11px] font-bold font-mono-custom rounded-full flex items-center justify-center px-1 shadow-md"
                 >
                   {cartCount}
                 </motion.span>
@@ -85,10 +103,10 @@ export const Navbar = () => {
 
             <button
               onClick={() => setMobileOpen(v => !v)}
-              className="lg:hidden p-2 text-[#7A6F65] hover:text-[#EDE4D6] transition-colors"
+              className="lg:hidden p-2.5 text-[var(--muted)] hover:text-[var(--text)] transition-colors rounded-xl hover:bg-[var(--surface)]"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -102,26 +120,38 @@ export const Navbar = () => {
             initial={{ opacity: 0, x: '100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
-            transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="fixed inset-0 z-[99] bg-[#08060A] flex flex-col justify-center items-center gap-8"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[99] bg-[var(--surface)] flex flex-col justify-center items-center gap-8 shadow-2xl"
           >
+            {/* Close button */}
             <button
               onClick={() => setMobileOpen(false)}
-              className="absolute top-6 right-6 text-[#7A6F65] hover:text-[#EDE4D6]"
+              className="absolute top-6 right-6 text-[var(--muted)] hover:text-[var(--text)] p-2"
             >
               <X size={24} />
             </button>
+            
+            {/* Logo inside mobile menu */}
+            <div className="absolute top-6 left-6 flex items-center gap-2">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8">
+                <circle cx="20" cy="20" r="19" fill="var(--primary)" />
+                <ellipse cx="20" cy="20" rx="9" ry="13" fill="#7C3F00" opacity="0.9" transform="rotate(-20 20 20)"/>
+                <path d="M20 10 Q24 20 20 30" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+              </svg>
+              <span className="font-display text-lg font-semibold text-[var(--text)]">Bean Haven</span>
+            </div>
+            
             {navLinks.map(({ label, path }, i) => (
               <motion.div
                 key={path}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
+                transition={{ delay: i * 0.05 }}
               >
                 <Link
                   to={path}
-                  className={`font-display text-4xl font-light transition-colors ${
-                    pathname === path ? 'text-[#C9A96E]' : 'text-[#EDE4D6] hover:text-[#C9A96E]'
+                  className={`font-display text-3xl font-light transition-colors ${
+                    pathname === path ? 'text-[var(--primary)]' : 'text-[var(--text)] hover:text-[var(--primary)]'
                   }`}
                 >
                   {label}

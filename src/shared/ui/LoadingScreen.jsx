@@ -28,7 +28,7 @@ export const LoadingScreen = ({ onComplete }) => {
       {!done && (
         <motion.div
           key="loader"
-          className="fixed inset-0 z-[9999] bg-[#08060A] flex flex-col items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[9999] bg-[var(--bg)] flex flex-col items-center justify-center overflow-hidden"
           exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
         >
           {/* Animated radial */}
@@ -48,26 +48,26 @@ export const LoadingScreen = ({ onComplete }) => {
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="text-center mb-16 relative z-10"
           >
-            <p className="font-mono-custom text-[#C9A96E] text-xs tracking-[0.5em] uppercase mb-4">Est. 2016</p>
-            <h1 className="font-display text-6xl sm:text-8xl text-[#EDE4D6] font-light tracking-tight leading-none">
+            <p className="font-mono-custom text-[var(--primary)] text-xs tracking-[0.5em] uppercase mb-4">Est. 2016</p>
+            <h1 className="font-display text-6xl sm:text-8xl text-[var(--text)] font-light tracking-tight leading-none">
               Bean Haven
             </h1>
-            <p className="font-mono-custom text-[#C9A96E]/60 text-xs tracking-[0.4em] uppercase mt-3">Café & Roastery</p>
+            <p className="font-mono-custom text-[var(--primary)]/60 text-xs tracking-[0.4em] uppercase mt-3">Café & Roastery</p>
           </motion.div>
 
           {/* Progress bar */}
           <div className="relative z-10 w-64 sm:w-80">
-            <div className="h-px w-full bg-[#1E1A14] overflow-hidden">
+            <div className="h-px w-full bg-[var(--surface)] overflow-hidden">
               <motion.div
-                className="h-full bg-gradient-to-r from-[#8C7040] via-[#C9A96E] to-[#E8CC8A]"
+                className="h-full bg-gradient-to-r from-[var(--accent)] via-[var(--primary)] to-[var(--highlight)]"
                 style={{ width: `${progress}%` }}
                 transition={{ duration: 0.5, ease: 'easeOut' }}
               />
             </div>
             <div className="flex justify-between items-center mt-3">
-              <span className="font-mono-custom text-[#4A4030] text-[10px] tracking-widest uppercase">Loading</span>
+              <span className="font-mono-custom text-[var(--muted)] text-[10px] tracking-widest uppercase">Loading</span>
               <motion.span
-                className="font-mono-custom text-[#C9A96E] text-[10px] tracking-widest"
+                className="font-mono-custom text-[var(--primary)] text-[10px] tracking-widest"
                 key={progress}
                 initial={{ opacity: 0.5 }}
                 animate={{ opacity: 1 }}
@@ -82,7 +82,7 @@ export const LoadingScreen = ({ onComplete }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
             transition={{ delay: 0.8 }}
-            className="absolute bottom-12 font-mono-custom text-[#4A4030] text-[10px] tracking-[0.4em] uppercase"
+            className="absolute bottom-12 font-mono-custom text-[var(--muted)] text-[10px] tracking-[0.4em] uppercase"
           >
             Brewing your experience
           </motion.p>

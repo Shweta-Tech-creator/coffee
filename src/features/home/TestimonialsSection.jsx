@@ -39,9 +39,9 @@ export const TestimonialsSection = () => {
   const prev = () => setIdx(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
 
   return (
-    <section ref={ref} className="relative py-36 bg-[#08060A] overflow-hidden">
+    <section ref={ref} className="relative py-36 bg-[var(--bg)] overflow-hidden">
       {/* Large decorative quote */}
-      <div className="absolute top-20 left-10 font-display text-[300px] text-[#C9A96E]/3 leading-none select-none pointer-events-none">"</div>
+      <div className="absolute top-20 left-10 font-display text-[300px] text-[var(--primary)]/3 leading-none select-none pointer-events-none">"</div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 relative z-10">
         <motion.div
@@ -50,14 +50,14 @@ export const TestimonialsSection = () => {
           transition={{ duration: 0.8 }}
           className="flex items-center gap-4 mb-20"
         >
-          <div className="h-px w-10 bg-[#C9A96E]" />
-          <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase">Reviews</span>
+          <div className="h-px w-10 bg-[var(--primary)]" />
+          <span className="font-mono-custom text-[var(--primary)] text-[10px] tracking-[0.4em] uppercase">Reviews</span>
         </motion.div>
 
         <div className="grid lg:grid-cols-12 gap-16 items-center">
           {/* Navigation + dots */}
           <div className="lg:col-span-1 flex lg:flex-col items-center gap-4 order-last lg:order-first">
-            <button onClick={prev} className="p-3 border border-[#C9A96E]/15 text-[#5A5040] hover:border-[#C9A96E]/40 hover:text-[#C9A96E] transition-all duration-200">
+            <button onClick={prev} className="p-3 border border-[var(--primary)]/15 text-[var(--muted)] hover:border-[var(--primary)]/40 hover:text-[var(--primary)] transition-all duration-200">
               <ChevronLeft size={16} />
             </button>
             <div className="flex lg:flex-col gap-2">
@@ -66,12 +66,12 @@ export const TestimonialsSection = () => {
                   key={i}
                   onClick={() => setIdx(i)}
                   className={`transition-all duration-300 ${
-                    i === idx ? 'w-8 h-0.5 lg:w-0.5 lg:h-8 bg-[#C9A96E]' : 'w-2 h-0.5 lg:w-0.5 lg:h-2 bg-[#C9A96E]/20'
+                    i === idx ? 'w-8 h-0.5 lg:w-0.5 lg:h-8 bg-[var(--primary)]' : 'w-2 h-0.5 lg:w-0.5 lg:h-2 bg-[var(--primary)]/20'
                   }`}
                 />
               ))}
             </div>
-            <button onClick={next} className="p-3 border border-[#C9A96E]/15 text-[#5A5040] hover:border-[#C9A96E]/40 hover:text-[#C9A96E] transition-all duration-200">
+            <button onClick={next} className="p-3 border border-[var(--primary)]/15 text-[var(--muted)] hover:border-[var(--primary)]/40 hover:text-[var(--primary)] transition-all duration-200">
               <ChevronRight size={16} />
             </button>
           </div>
@@ -86,17 +86,17 @@ export const TestimonialsSection = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <blockquote className="font-display text-3xl lg:text-4xl xl:text-5xl text-[#EDE4D6] font-light leading-[1.25] mb-12">
+                <blockquote className="font-display text-3xl lg:text-4xl xl:text-5xl text-[var(--text)] font-light leading-[1.25] mb-12">
                   "{t.quote}"
                 </blockquote>
 
                 <div className="flex items-center gap-5">
-                  <div className="w-12 h-12 overflow-hidden rounded-full border border-[#C9A96E]/20">
+                  <div className="w-12 h-12 overflow-hidden rounded-full border border-[var(--primary)]/20">
                     <img src={t.img} alt={t.author} className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <p className="font-display text-[#EDE4D6] text-base font-light">{t.author}</p>
-                    <p className="font-mono-custom text-[9px] text-[#5A5040] tracking-widest uppercase mt-0.5">{t.role}</p>
+                    <p className="font-display text-[var(--text)] text-base font-light">{t.author}</p>
+                    <p className="font-mono-custom text-[9px] text-[var(--muted)] tracking-widest uppercase mt-0.5">{t.role}</p>
                   </div>
                 </div>
               </motion.div>

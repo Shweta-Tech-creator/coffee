@@ -75,7 +75,7 @@ export const PageTransition = ({ children }) => {
               key={i}
               custom={i}
               {...anim(expand)}
-              className="relative w-full h-full bg-[#0E0C12] border-r border-[#C9A96E]/5"
+              className="relative w-full h-full bg-[var(--surface)] border-r border-[var(--primary)]/5"
             />
           );
         })}

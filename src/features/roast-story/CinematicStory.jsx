@@ -404,7 +404,7 @@ export const CinematicStory = () => {
   return (
     <div ref={containerRef} style={{ height: '600vh' }}>
       {/* ── Sticky cinematic viewport ────────────────────────────────── */}
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#0A0806]">
+      <div className="sticky top-0 h-screen overflow-hidden bg-[var(--bg)]">
 
         {/* Grain film texture */}
         <div
@@ -422,7 +422,7 @@ export const CinematicStory = () => {
 
         {/* ── Intro screen ───────────────────────────────────────────── */}
         <motion.div
-          className="absolute inset-0 z-[30] bg-[#0A0806] flex items-center justify-center"
+          className="absolute inset-0 z-[30] bg-[var(--bg)] flex items-center justify-center"
           style={{ opacity: introOp, y: introY }}
         >
           <div className="text-center px-6 max-w-2xl">
@@ -432,24 +432,24 @@ export const CinematicStory = () => {
               transition={{ duration: 1.4, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-center justify-center gap-5 mb-8">
-                <div className="h-px w-16 bg-[#C9A96E]/50" />
-                <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.6em] uppercase">
+                <div className="h-px w-16 bg-[var(--primary)]/50" />
+                <span className="font-mono-custom text-[var(--primary)] text-[10px] tracking-[0.6em] uppercase">
                   Bean Haven · Est. 2016
                 </span>
-                <div className="h-px w-16 bg-[#C9A96E]/50" />
+                <div className="h-px w-16 bg-[var(--primary)]/50" />
               </div>
-              <h2 className="font-display text-5xl sm:text-7xl lg:text-8xl text-[#EDE4D6] font-light leading-none mb-6">
+              <h2 className="font-display text-5xl sm:text-7xl lg:text-8xl text-[var(--text)] font-light leading-none mb-6">
                 Our Story
               </h2>
-              <p className="font-mono-custom text-[#5A5040] text-[10px] tracking-[0.4em] uppercase mb-12">
+              <p className="font-mono-custom text-[var(--muted)] text-[10px] tracking-[0.4em] uppercase mb-12">
                 From seed to cup · Eight chapters
               </p>
               <motion.div
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <div className="w-px h-16 bg-gradient-to-b from-[#C9A96E]/60 to-transparent mx-auto" />
-                <p className="font-mono-custom text-[#3A3025] text-[9px] tracking-[0.5em] uppercase mt-2">
+                <div className="w-px h-16 bg-gradient-to-b from-[var(--primary)]/60 to-transparent mx-auto" />
+                <p className="font-mono-custom text-[var(--muted)] text-[9px] tracking-[0.5em] uppercase mt-2">
                   Scroll
                 </p>
               </motion.div>
@@ -554,7 +554,7 @@ export const CinematicStory = () => {
           <div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse 100% 80% at 50% 60%, #1a0d05 0%, #0A0806 70%)',
+              background: 'radial-gradient(ellipse 100% 80% at 50% 60%, #1a0d05 0%, var(--bg) 70%)',
             }}
           />
 
@@ -585,32 +585,32 @@ export const CinematicStory = () => {
             style={{ y: endY }}
           >
             <div className="flex items-center justify-center gap-4 mb-10">
-              <div className="h-px w-10 sm:w-20 bg-[#C9A96E]/40" />
+              <div className="h-px w-10 sm:w-20 bg-[var(--primary)]/40" />
               <div className="flex gap-2">
                 {[...Array(3)].map((_, i) => (
-                  <div key={i} className="w-1 h-1 rounded-full bg-[#C9A96E]/60" />
+                  <div key={i} className="w-1 h-1 rounded-full bg-[var(--primary)]/60" />
                 ))}
               </div>
-              <div className="h-px w-10 sm:w-20 bg-[#C9A96E]/40" />
+              <div className="h-px w-10 sm:w-20 bg-[var(--primary)]/40" />
             </div>
 
             <h2
-              className="font-display text-3xl sm:text-5xl lg:text-7xl font-light text-[#EDE4D6] leading-tight"
+              className="font-display text-3xl sm:text-5xl lg:text-7xl font-light text-[var(--text)] leading-tight"
               style={{
                 textShadow: '0 0 120px rgba(201,169,110,0.25), 0 4px 60px rgba(0,0,0,0.9)',
               }}
             >
               Every Bean Has a Journey.
               <br />
-              <em className="text-[#C9A96E]">Every Cup Has a Story.</em>
+              <em className="text-[var(--primary)]">Every Cup Has a Story.</em>
             </h2>
 
             <div className="mt-10 sm:mt-14 flex items-center justify-center gap-5">
-              <div className="h-px w-8 bg-[#C9A96E]/30" />
-              <span className="font-mono-custom text-[#4A4030] text-[9px] sm:text-[10px] tracking-[0.5em] uppercase">
+              <div className="h-px w-8 bg-[var(--primary)]/30" />
+              <span className="font-mono-custom text-[var(--muted)] text-[9px] sm:text-[10px] tracking-[0.5em] uppercase">
                 Bean Haven Café & Roastery
               </span>
-              <div className="h-px w-8 bg-[#C9A96E]/30" />
+              <div className="h-px w-8 bg-[var(--primary)]/30" />
             </div>
           </motion.div>
         </motion.div>
@@ -623,7 +623,7 @@ export const CinematicStory = () => {
                 className="font-mono-custom text-[8px] uppercase tracking-widest text-white/0 group-hover:text-white/40 transition-colors"
                 style={{ color: ch.accent }}
               />
-              <div className="w-0.5 h-5 rounded-full overflow-hidden bg-white/10">
+              <div className="w-0.5 h-5 rounded-full overflow-hidden bg-[var(--surface)]/10">
                 <motion.div
                   className="w-full rounded-full origin-top"
                   style={{
@@ -638,8 +638,8 @@ export const CinematicStory = () => {
         </div>
 
         {/* ── Bottom progress bar ─────────────────────────────────────── */}
-        <div className="absolute bottom-[6vh] left-0 right-0 h-px bg-white/5 z-[45] pointer-events-none">
-          <motion.div className="h-full bg-[#C9A96E]" style={{ width: progressW }} />
+        <div className="absolute bottom-[6vh] left-0 right-0 h-px bg-[var(--surface)]/5 z-[45] pointer-events-none">
+          <motion.div className="h-full bg-[var(--primary)]" style={{ width: progressW }} />
         </div>
 
       </div>

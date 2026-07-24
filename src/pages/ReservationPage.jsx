@@ -1,56 +1,56 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Users, ShieldCheck, Clock, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { ReservationSection } from '../features/reservations/ReservationSection';
 
 const EVENT_TYPES = [
-  { title: 'Private Cupping & Tasting Workshop', capacity: 'Up to 12 Guests', desc: 'A 90-minute guided sensory journey comparing Ethiopian, Colombian, and Guatemalan single origins.' },
-  { title: 'Full Café Venue Hire', capacity: 'Up to 45 Guests', desc: 'Exclusive access to our Victorian roastery space with custom espresso bar and catering.' },
-  { title: 'Barista Espresso Masterclass', capacity: 'Up to 6 Guests', desc: 'Hands-on training in coffee grinding, milk steaming, and pour over extraction chemistry.' }
+  { title: 'Private Cupping & Tasting', capacity: 'Up to 12 Guests', desc: 'Guided sensory tasting comparing Ethiopian, Colombian, and Guatemalan single origins.' },
+  { title: 'Full Venue Hire', capacity: 'Up to 45 Guests', desc: 'Exclusive access to our Victorian roastery space with custom espresso bar.' },
+  { title: 'Barista Masterclass', capacity: 'Up to 6 Guests', desc: 'Hands-on training in coffee grinding, milk steaming, and pour over extraction.' }
 ];
 
 export const ReservationPage = () => {
   return (
-    <div className="pt-28 bg-[#08060A] min-h-screen text-[#EDE4D6]">
-      <section className="py-20 px-6 lg:px-20 max-w-[1440px] mx-auto border-b border-[#C9A96E]/15 text-center">
+    <div className="pt-28 bg-[var(--bg)] min-h-screen text-[var(--text)]">
+      <section className="py-16 px-6 lg:px-20 max-w-[1440px] mx-auto border-b border-[var(--accent)]/15 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl mx-auto space-y-4"
+          transition={{ duration: 0.7 }}
+          className="max-w-2xl mx-auto space-y-3"
         >
-          <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase block">Bookings</span>
-          <h1 className="font-display text-5xl sm:text-7xl font-light">
-            Interactive <em className="text-[#C9A96E]">Table Reservation.</em>
+          <span className="font-mono-custom text-[var(--primary)] text-xs tracking-[0.25em] uppercase font-semibold block">Bookings</span>
+          <h1 className="font-display text-4xl sm:text-6xl font-light text-[var(--text)]">
+            Table <span className="text-[var(--primary)] italic">Reservation.</span>
           </h1>
-          <p className="text-[#9E9283] font-light text-lg">
-            Choose your preferred seating arrangement and enjoy a reserved sensory coffee experience.
+          <p className="text-[var(--muted)] font-light text-base leading-relaxed">
+            Reserve your favorite table and enjoy a dedicated specialty coffee experience.
           </p>
         </motion.div>
       </section>
 
-      {/* Main Interactive Reservation Form & Floorplan */}
+      {/* Main Interactive Reservation Form */}
       <ReservationSection />
 
-      {/* Private Events & Masterclasses */}
-      <section className="py-28 px-6 lg:px-20 max-w-[1440px] mx-auto border-t border-[#C9A96E]/15">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
+      {/* Private Events */}
+      <section className="py-20 px-6 lg:px-20 max-w-[1440px] mx-auto border-t border-[var(--accent)]/15">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div>
-            <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase block mb-3">Private Gatherings</span>
-            <h2 className="font-display text-4xl lg:text-6xl font-light">Workshops & Venue Hire</h2>
+            <span className="font-mono-custom text-[var(--primary)] text-xs tracking-[0.25em] uppercase font-semibold block mb-2">Private Gatherings</span>
+            <h2 className="font-display text-3xl lg:text-5xl font-light text-[var(--text)]">Workshops & Venue Hire</h2>
           </div>
-          <p className="text-[#7A6F65] font-light text-sm max-w-md">
-            Host your next corporate meeting, sensory masterclass, or intimate celebration inside Bean Haven.
+          <p className="text-[var(--muted)] font-light text-sm max-w-sm">
+            Host corporate meetings, coffee masterclasses, or private celebrations.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6">
           {EVENT_TYPES.map((evt, i) => (
-            <div key={i} className="bg-[#0E0C12] border border-[#C9A96E]/20 p-8 space-y-4">
-              <Sparkles size={20} className="text-[#C9A96E]" />
-              <h3 className="font-display text-2xl font-light text-[#EDE4D6]">{evt.title}</h3>
-              <span className="font-mono-custom text-xs text-[#C9A96E] block">{evt.capacity}</span>
-              <p className="font-mono-custom text-xs text-[#7A6F65] leading-relaxed pt-2 border-t border-[#C9A96E]/10">
+            <div key={i} className="bg-[var(--surface)] border border-[var(--primary)]/15 rounded-2xl p-6 space-y-3 hover:border-[var(--primary)]/35 hover:shadow-md transition-all shadow-sm">
+              <Sparkles size={20} className="text-[var(--primary)]" />
+              <h3 className="font-display text-xl font-medium text-[var(--text)]">{evt.title}</h3>
+              <span className="font-mono-custom text-xs text-[var(--primary)] font-medium block">{evt.capacity}</span>
+              <p className="text-xs text-[var(--muted)] leading-relaxed pt-2 border-t border-[var(--primary)]/10 font-light">
                 {evt.desc}
               </p>
             </div>
@@ -58,13 +58,12 @@ export const ReservationPage = () => {
         </div>
       </section>
 
-      {/* Reservation Guidelines */}
-      <section className="py-20 px-6 lg:px-20 max-w-4xl mx-auto border-t border-[#C9A96E]/15 font-mono-custom text-xs text-[#7A6F65]">
-        <div className="p-8 border border-[#C9A96E]/15 bg-[#0E0C12] space-y-4">
-          <h4 className="font-display text-2xl text-[#EDE4D6]">House Rules & Booking Etiquette</h4>
-          <p>• Tables are held for 15 minutes past your reserved time slot before being released to walk-in guests.</p>
-          <p>• For parties larger than 6 guests, please contact our events concierge directly via hello@beanhaven.co.uk.</p>
-          <p>• We accommodate dietary preferences (vegan, gluten-free, nut-free sourdough options available).</p>
+      {/* Reservation Etiquette */}
+      <section className="py-16 px-6 lg:px-20 max-w-3xl mx-auto">
+        <div className="p-6 border border-[var(--primary)]/15 bg-[var(--surface)] rounded-2xl space-y-3 text-sm text-[var(--muted)] font-light shadow-sm">
+          <h4 className="font-display text-xl text-[var(--text)] font-semibold">Booking Guidelines</h4>
+          <p>• Tables are held for 15 minutes past your reserved time before release.</p>
+          <p>• For parties larger than 6 guests, please contact hello@beanhaven.co.uk directly.</p>
         </div>
       </section>
     </div>

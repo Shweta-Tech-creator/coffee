@@ -12,6 +12,8 @@ import { Navbar } from './shared/layout/Navbar';
 import { CartDrawer } from './features/checkout/CartDrawer';
 import { Footer } from './shared/layout/Footer';
 import { PageTransition } from './shared/layout/PageTransition';
+import { Chatbot } from './shared/ui/Chatbot';
+import { ScrollToTopButton } from './shared/ui/ScrollToTopButton';
 
 // Pages
 import { Home } from './pages/Home';
@@ -76,6 +78,8 @@ export default function App() {
 
           <CartDrawer />
           <Footer />
+          <Chatbot />
+          <ScrollToTopButton />
         </div>
       </CartProvider>
     </Router>

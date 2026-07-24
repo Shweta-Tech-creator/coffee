@@ -1,18 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --bg: #08060A;
-    --surface: #0F0D13;
-    --surface-2: #15121A;
-    --gold: #C9A96E;
-    --gold-light: #E8CC8A;
-    --gold-dim: #8C7040;
-    --cream: #F0E6D3;
-    --text: #EDE4D6;
-    --text-muted: #7A6F65;
-    --accent: #C86D51;
+    --primary: #C9A96E;       /* Warm gold */
+    --accent: #B8935A;        /* Darker gold (hover) */
+    --bg: #0A0E14;            /* Deep navy background */
+    --surface: #141B24;       /* Dark card surface */
+    --text: #E8E2D6;          /* Off-white text */
+    --muted: #7A7267;         /* Muted warm gray */
+    --highlight: #FFD700;     /* Bright gold for Sensory Focus */
   }
 
   * {
@@ -28,26 +25,61 @@
   body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5 {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
-    background: rgba(201, 169, 110, 0.3);
-    color: #E8CC8A;
+    background: rgba(201, 169, 110, 0.35);
+    color: #E8E2D6;
+  }
+
+  /* ── Form Controls Rounded Corners & Date Placeholder Styling ── */
+  input, select, textarea {
+    border-radius: 0.75rem !important; /* rounded-xl */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  input[type="date"] {
+    color-scheme: dark;
+  }
+
+  input[type="date"]::-webkit-datetime-edit,
+  input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+  input[type="date"]::-webkit-datetime-edit-month-field,
+  input[type="date"]::-webkit-datetime-edit-day-field,
+  input[type="date"]::-webkit-datetime-edit-year-field,
+  input[type="date"]::-webkit-datetime-edit-text {
+    color: #7A7267 !important;
+  }
+
+  input[type="date"]:valid::-webkit-datetime-edit,
+  input[type="date"]:focus::-webkit-datetime-edit {
+    color: #E8E2D6 !important;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+  }
+
+  ::placeholder {
+    color: #7A7267 !important;
+    opacity: 1 !important;
   }
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #08060A; }
-::-webkit-scrollbar-thumb { background: #C9A96E; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 9999px; }
 
 /* ── Hide cursor on hover-capable devices ── */
 @media (hover: hover) and (pointer: fine) {
@@ -62,7 +94,7 @@
   width: 300%;
   height: 300%;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.028;
+  opacity: 0.025;
   pointer-events: none;
   z-index: 9997;
   animation: grain-shift 8s steps(10) infinite;
@@ -82,12 +114,13 @@
 }
 
 /* ── Typography Classes ── */
-.font-display { font-family: 'Cormorant Garamond', serif; }
-.font-mono-custom { font-family: 'Space Mono', monospace; }
+.font-display { font-family: 'Outfit', sans-serif; }
+.font-serif-custom { font-family: 'Playfair Display', serif; }
+.font-mono-custom { font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: 0.1em; font-weight: 500; }
 
 /* ── Gold Gradient Text ── */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #C9A96E 0%, #F0D898 40%, #C9A96E 70%, #8C7040 100%);
+  background: linear-gradient(135deg, #C9A96E 0%, #E8D5A8 45%, #B8935A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -104,17 +137,17 @@
   left: 0;
   width: 0;
   height: 1px;
-  background: #C9A96E;
+  background: var(--primary);
   transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .underline-slide:hover::after { width: 100%; }
 
 /* ── Glass ── */
 .glass {
-  background: rgba(15, 13, 19, 0.7);
+  background: rgba(10, 14, 20, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(201, 169, 110, 0.12);
+  border: 1px solid rgba(201, 169, 110, 0.15);
 }
 
 /* ── Marquee ── */
@@ -156,8 +189,8 @@
 }
 .menu-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(201,169,110,0.08);
-  border-color: rgba(201,169,110,0.3);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.7), 0 0 40px rgba(201,169,110,0.12);
+  border-color: rgba(201,169,110,0.35);
 }
 
 /* ── Image Zoom on Hover ── */

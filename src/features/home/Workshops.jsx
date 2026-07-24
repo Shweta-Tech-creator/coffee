@@ -25,13 +25,13 @@ const SESSIONS = [
 
 export const Workshops = () => {
   return (
-    <section className="py-24 sm:py-32 bg-[#08060A] border-t border-[#C9A96E]/15">
+    <section className="py-24 sm:py-32 bg-[var(--bg)] border-t border-[var(--primary)]/15">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-20 text-center">
-        <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase block mb-4">
+        <span className="font-mono-custom text-[var(--primary)] text-[10px] tracking-[0.4em] uppercase block mb-4">
           Community
         </span>
-        <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-[#EDE4D6] mb-16">
-          Master the <em className="text-[#C9A96E]">Craft</em>
+        <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-[var(--text)] mb-16">
+          Master the <em className="text-[var(--primary)]">Craft</em>
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -42,17 +42,17 @@ export const Workshops = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="bg-[#0E0C12] border border-[#C9A96E]/20 p-8 sm:p-10 text-left hover:border-[#C9A96E]/50 transition-colors group"
+              className="bg-[var(--surface)] border border-[var(--primary)]/20 p-8 sm:p-10 text-left hover:border-[var(--primary)]/50 transition-colors group"
             >
-              <div className="w-12 h-12 rounded-full border border-[#C9A96E]/30 flex items-center justify-center mb-6 text-[#C9A96E] group-hover:bg-[#C9A96E] group-hover:text-[#08060A] transition-colors">
+              <div className="w-12 h-12 rounded-full border border-[var(--primary)]/30 flex items-center justify-center mb-6 text-[var(--primary)] group-hover:bg-[var(--primary)] group-hover:text-[var(--bg)] transition-colors">
                 <session.icon size={20} />
               </div>
-              <h3 className="font-display text-2xl text-[#EDE4D6] mb-3">{session.title}</h3>
-              <p className="text-[#7A6F65] font-light text-sm leading-relaxed mb-8">
+              <h3 className="font-display text-2xl text-[var(--text)] mb-3">{session.title}</h3>
+              <p className="text-[var(--muted)] font-light text-sm leading-relaxed mb-8">
                 {session.desc}
               </p>
-              <div className="pt-4 border-t border-[#C9A96E]/10">
-                <p className="font-mono-custom text-[10px] text-[#C9A96E] tracking-widest uppercase">
+              <div className="pt-4 border-t border-[var(--primary)]/10">
+                <p className="font-mono-custom text-[10px] text-[var(--primary)] tracking-widest uppercase">
                   {session.date}
                 </p>
               </div>
@@ -61,7 +61,7 @@ export const Workshops = () => {
         </div>
 
         <div className="mt-16">
-          <button className="inline-flex items-center gap-3 px-10 py-4 bg-transparent border border-[#C9A96E] text-[#C9A96E] font-mono-custom text-[10px] tracking-[0.25em] uppercase font-bold hover:bg-[#C9A96E] hover:text-[#08060A] transition-colors">
+          <button className="inline-flex items-center gap-3 px-10 py-4 bg-transparent border border-[var(--primary)] text-[var(--primary)] font-mono-custom text-[10px] tracking-[0.25em] uppercase font-bold hover:bg-[var(--primary)] hover:text-[var(--bg)] transition-colors">
             View Full Calendar
           </button>
         </div>

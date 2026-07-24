@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-// Check immediately — not in an effect — to avoid flicker
 const isTouchDevice = () =>
   typeof window !== 'undefined' &&
   (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window);
 
 export const CustomCursor = () => {
-  // Return null immediately for touch/mobile devices — no hooks needed before this
-  // We keep hooks outside the conditional to satisfy React's rules of hooks
   const [position, setPosition] = useState({ x: -100, y: -100 });
   const [trailingPos, setTrailingPos] = useState({ x: -100, y: -100 });
   const [isHovered, setIsHovered] = useState(false);
@@ -35,17 +32,16 @@ export const CustomCursor = () => {
     };
   }, []);
 
-  // Smooth trailing effect — skip on touch devices
+  // Trailing smooth ring
   useEffect(() => {
     if (isTouch.current) return;
 
     let animationFrameId;
-    const posRef = { x: position.x, y: position.y };
 
     const render = () => {
       setTrailingPos(prev => {
-        const nx = prev.x + (position.x - prev.x) * 0.18;
-        const ny = prev.y + (position.y - prev.y) * 0.18;
+        const nx = prev.x + (position.x - prev.x) * 0.2;
+        const ny = prev.y + (position.y - prev.y) * 0.2;
         return { x: nx, y: ny };
       });
       animationFrameId = requestAnimationFrame(render);
@@ -59,7 +55,7 @@ export const CustomCursor = () => {
     if (isTouch.current) return;
 
     const handleElementHover = () => {
-      const hoverables = document.querySelectorAll('a, button, [data-cursor-hover]');
+      const hoverables = document.querySelectorAll('a, button, input, select, textarea, [data-cursor-hover]');
       hoverables.forEach((el) => {
         el.addEventListener('mouseenter', () => {
           setIsHovered(true);
@@ -79,51 +75,34 @@ export const CustomCursor = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Don't render anything on touch/mobile
   if (isTouch.current) return null;
 
   return (
     <>
-      {/* Main Terracotta Coffee Bean Dot Cursor */}
+      {/* Sleek Amber Coffee Bean Core Dot */}
       <div
         className="fixed top-0 left-0 pointer-events-none z-[9999] transition-transform duration-75 ease-out"
         style={{
           transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%) scale(${
-            isClicking ? 0.75 : isHovered ? 1.4 : 1
+            isClicking ? 0.75 : isHovered ? 1.4 : 1.2
           })`
         }}
       >
         <svg
-          width="20"
-          height="20"
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
-          fill="#C86D51"
-          className="drop-shadow-[0_0_8px_rgba(200,109,81,0.6)]"
+          fill="var(--primary)"
+          className="drop-shadow-[0_0_12px_rgba(212,140,70,0.7)]"
         >
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm5.31-3.1L6.1 5.69C7.45 4.63 9.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z" />
+          {/* Aesthetic Coffee Bean Path */}
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.8.6-3.46 1.6-4.8l11.2 11.2C15.46 19.4 13.8 20 12 20zm5.4-3.2L6.2 5.6C7.54 4.6 9.2 4 12 4c4.41 0 8 3.59 8 8 0 1.8-.6 3.46-1.6 4.8z" opacity="0" />
+          <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm-1 14.8c-2.8-1.2-4.5-3.8-4.5-6.8 0-4.1 3.4-7.5 7.5-7.5 1.5 0 2.9.5 4 1.3L7.3 16.5c-.5-.4-.9-.8-1.3-1.3zm6.5-2.7L9.2 6.8c.8-.5 1.8-.8 2.8-.8 4.1 0 7.5 3.4 7.5 7.5 0 1.5-.5 2.9-1.3 4c-.2-.4-.4-.7-.7-1.4z" opacity="0"/>
+          <circle cx="12" cy="12" r="7" fill="var(--primary)" />
         </svg>
       </div>
 
-      {/* Trailing Soft Halo Ring */}
-      <div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] flex items-center justify-center"
-        style={{
-          transform: `translate3d(${trailingPos.x}px, ${trailingPos.y}px, 0) translate(-50%, -50%)`,
-          width: isHovered ? '56px' : '36px',
-          height: isHovered ? '56px' : '36px',
-          borderRadius: '50%',
-          border: '1.5px solid rgba(200, 109, 81, 0.45)',
-          backgroundColor: isHovered ? 'rgba(200, 109, 81, 0.12)' : 'transparent',
-          boxShadow: isHovered ? '0 0 20px rgba(200, 109, 81, 0.3)' : 'none',
-          transition: 'width 0.2s ease, height 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease'
-        }}
-      >
-        {cursorText && (
-          <span className="text-[9px] uppercase tracking-wider text-[#C86D51] font-semibold whitespace-nowrap px-1">
-            {cursorText}
-          </span>
-        )}
-      </div>
+
     </>
   );
 };

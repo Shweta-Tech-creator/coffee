@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Star, Plus, SlidersHorizontal } from 'lucide-react';
+import { ShoppingCart, Star, Plus, SlidersHorizontal, LayoutGrid, List } from 'lucide-react';
 import { useCart } from '../checkout/CartContext';
 import { CoffeeCustomizerModal } from './CoffeeCustomizerModal';
 
@@ -44,7 +44,7 @@ const MENU = [
   {
     id: 7, cat: 'Food', name: 'Almond Croissant', price: 5.50,
     desc: 'Twice-baked · frangipane · toasted almond · flaky layers',
-    badge: 'Baker\'s Pride', rating: 5.0,
+    badge: "Baker's Pride", rating: 5.0,
     img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&q=80'
   },
   {
@@ -59,7 +59,7 @@ const CATS = ['All', 'Espresso', 'Filter', 'Cold', 'Food'];
 
 export const SignatureMenu = () => {
   const [cat, setCat] = useState('All');
-  const [hovered, setHovered] = useState(null);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [selectedProduct, setSelectedProduct] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -68,149 +68,219 @@ export const SignatureMenu = () => {
   const filtered = cat === 'All' ? MENU : MENU.filter(i => i.cat === cat);
 
   return (
-    <section id="menu" ref={ref} className="relative py-16 sm:py-24 lg:py-36 bg-[#08060A]">
-      {/* Section label + heading */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-20">
+    <section id="menu" ref={ref} className="relative py-20 lg:py-32 bg-[var(--bg)]">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
+        {/* Header & Controls */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9 }}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-20"
+          transition={{ duration: 0.8 }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14"
         >
           <div>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="h-px w-10 bg-[#C9A96E]" />
-              <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase">Our Menu</span>
+            <div className="flex items-center gap-3 mb-3">
+              <span className="h-px w-8 bg-[var(--accent)]" />
+              <span className="font-mono-custom text-[var(--accent)] text-xs tracking-[0.25em] uppercase font-semibold">
+                Artisanal Selection
+              </span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-7xl text-[#EDE4D6] font-light leading-[1.05]">
-              Crafted with<br /><em className="text-[#C9A96E]">Intention.</em>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl text-[var(--text)] font-light leading-tight">
+              Curated <span className="text-[var(--accent)] italic">Menu.</span>
             </h2>
           </div>
 
-          {/* Category filter */}
-          <div className="flex flex-wrap gap-2">
-            {CATS.map(c => (
+          {/* Filter Pills & View Mode Switcher */}
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap gap-2 p-1.5 bg-[var(--surface)] border border-[var(--accent)]/15 rounded-2xl">
+              {CATS.map(c => (
+                <button
+                  key={c}
+                  onClick={() => setCat(c)}
+                  className={`font-mono-custom text-xs px-4 py-2 rounded-xl transition-all duration-200 ${
+                    cat === c
+                      ? 'bg-[var(--accent)] text-[var(--bg)] font-bold shadow-md shadow-[var(--accent)]/20'
+                      : 'text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]'
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+
+            {/* Layout Toggle */}
+            <div className="flex items-center gap-1 p-1.5 bg-[var(--surface)] border border-[var(--accent)]/15 rounded-2xl">
               <button
-                key={c}
-                onClick={() => setCat(c)}
-                className={`font-mono-custom text-[10px] tracking-[0.25em] uppercase px-5 py-2.5 border transition-all duration-300 ${
-                  cat === c
-                    ? 'bg-[#C9A96E] border-[#C9A96E] text-[#08060A] font-bold'
-                    : 'border-[#C9A96E]/20 text-[#5A5040] hover:border-[#C9A96E]/50 hover:text-[#C9A96E]'
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-xl transition-colors ${
+                  viewMode === 'grid' ? 'bg-[var(--accent)] text-[var(--bg)]' : 'text-[var(--muted)] hover:text-[var(--text)]'
                 }`}
+                title="Grid View"
               >
-                {c}
+                <LayoutGrid size={16} />
               </button>
-            ))}
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded-xl transition-colors ${
+                  viewMode === 'list' ? 'bg-[var(--accent)] text-[var(--bg)]' : 'text-[var(--muted)] hover:text-[var(--text)]'
+                }`}
+                title="List View"
+              >
+                <List size={16} />
+              </button>
+            </div>
           </div>
         </motion.div>
 
-        {/* Grid */}
-        <motion.div layout className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#C9A96E]/8">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((item, i) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.04 }}
-                className="relative bg-[#08060A] group overflow-hidden cursor-pointer"
-                onMouseEnter={() => setHovered(item.id)}
-                onMouseLeave={() => setHovered(null)}
-                onClick={() => setSelectedProduct(item)}
-              >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden img-zoom">
-                  <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#08060A] via-[#08060A]/30 to-transparent" />
-
-                  {item.badge && (
-                    <span className="absolute top-4 left-4 font-mono-custom text-[9px] tracking-[0.3em] uppercase bg-[#C9A96E] text-[#08060A] px-3 py-1 font-bold">
-                      {item.badge}
-                    </span>
-                  )}
-
-                  {/* Add & Customize Overlay buttons */}
-                  <AnimatePresence>
-                    {hovered === item.id && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="absolute bottom-4 right-4 flex items-center gap-2"
-                      >
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedProduct(item);
-                          }}
-                          className="px-3 py-2 bg-[#08060A] border border-[#C9A96E] text-[#C9A96E] font-mono-custom text-[9px] uppercase tracking-widest flex items-center gap-1.5 hover:bg-[#C9A96E] hover:text-[#08060A] transition-colors"
-                        >
-                          <SlidersHorizontal size={12} />
-                          Customize
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            addToCart(item);
-                          }}
-                          className="w-10 h-10 bg-[#C9A96E] text-[#08060A] flex items-center justify-center hover:bg-[#E8CC8A] transition-colors"
-                        >
-                          <Plus size={16} />
-                        </button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                {/* Info */}
-                <div className="p-3 sm:p-6">
-                  <div className="flex items-start justify-between mb-1 sm:mb-2">
-                    <h3 className="font-display text-base sm:text-xl text-[#EDE4D6] font-light leading-tight">{item.name}</h3>
-                    <span className="font-display text-base sm:text-xl text-[#C9A96E] font-light ml-2 shrink-0">${item.price.toFixed(2)}</span>
-                  </div>
-                  <p className="font-mono-custom text-[9px] sm:text-[10px] text-[#4A4030] tracking-wide leading-relaxed mb-3 hidden sm:block">
-                    {item.desc}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <Star size={10} className="text-[#C9A96E] fill-current" />
-                      <span className="font-mono-custom text-[10px] text-[#5A5040]">{item.rating}</span>
+        {/* Menu Items Container */}
+        <AnimatePresence mode="popLayout">
+          {viewMode === 'grid' ? (
+            /* Uncluttered Modern Grid */
+            <motion.div
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            >
+              {filtered.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className="bg-[var(--surface)] border border-[var(--accent)]/15 rounded-2xl p-5 flex flex-col justify-between hover:border-[var(--accent)]/40 hover:shadow-xl hover:shadow-[var(--accent)]/5 transition-all duration-300 group"
+                >
+                  <div>
+                    {/* Image Thumbnail Header - Clean & Rounded */}
+                    <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-4 bg-[var(--surface)]">
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {item.badge && (
+                        <span className="absolute top-2.5 left-2.5 bg-[var(--accent)] text-[var(--bg)] font-mono-custom text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">
+                          {item.badge}
+                        </span>
+                      )}
                     </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        addToCart(item);
-                      }}
-                      className="font-mono-custom text-[9px] tracking-[0.25em] uppercase text-[#C9A96E] hover:text-[#E8CC8A] transition-colors flex items-center gap-1.5"
-                    >
-                      Add <ShoppingCart size={10} />
-                    </button>
+
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <h3 className="font-display text-xl text-[var(--text)] font-medium leading-snug">{item.name}</h3>
+                      <span className="font-display text-lg text-[var(--accent)] font-semibold shrink-0">
+                        ${item.price.toFixed(2)}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-[var(--muted)] font-light leading-relaxed mb-4">
+                      {item.desc}
+                    </p>
                   </div>
-                </div>
 
-                {/* Bottom line */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-[#C9A96E] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                  {/* Actions & Rating Footer */}
+                  <div className="pt-4 border-t border-[var(--accent)]/10 flex items-center justify-between">
+                    <div className="flex items-center gap-1 text-[var(--accent)]">
+                      <Star size={12} className="fill-current" />
+                      <span className="font-mono-custom text-xs text-[var(--muted)] font-medium">{item.rating}</span>
+                    </div>
 
-        {/* View full menu */}
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setSelectedProduct(item)}
+                        className="p-2.5 text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] rounded-xl transition-colors"
+                        title="Customize item"
+                      >
+                        <SlidersHorizontal size={14} />
+                      </button>
+
+                      <button
+                        onClick={() => addToCart(item)}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-[var(--accent)] text-[var(--bg)] rounded-xl font-mono-custom text-xs font-bold hover:bg-[var(--highlight)] transition-colors shadow-sm"
+                      >
+                        <Plus size={14} /> Add
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            /* Uncluttered Streamlined List View */
+            <motion.div
+              layout
+              className="space-y-4 max-w-4xl mx-auto"
+            >
+              {filtered.map((item, i) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.04 }}
+                  className="bg-[var(--surface)] border border-[var(--accent)]/15 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-4 sm:gap-6 hover:border-[var(--accent)]/40 transition-all duration-300"
+                >
+                  {/* Left: Thumbnail & Details */}
+                  <div className="flex items-center gap-4 sm:gap-6 min-w-0">
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 bg-[var(--surface)]"
+                    />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-3 flex-wrap mb-1">
+                        <h3 className="font-display text-lg sm:text-xl text-[var(--text)] font-medium">{item.name}</h3>
+                        {item.badge && (
+                          <span className="bg-[var(--accent)]/15 text-[var(--accent)] font-mono-custom text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-md font-semibold border border-[var(--accent)]/20">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-[var(--muted)] font-light truncate max-w-md">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right: Price & Buttons */}
+                  <div className="flex items-center gap-4 sm:gap-6 shrink-0">
+                    <span className="font-display text-lg sm:text-xl text-[var(--accent)] font-semibold">
+                      ${item.price.toFixed(2)}
+                    </span>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setSelectedProduct(item)}
+                        className="p-2.5 text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] rounded-xl transition-colors"
+                        title="Customize"
+                      >
+                        <SlidersHorizontal size={14} />
+                      </button>
+                      <button
+                        onClick={() => addToCart(item)}
+                        className="px-4 py-2 bg-[var(--accent)] text-[var(--bg)] rounded-xl font-mono-custom text-xs font-bold hover:bg-[var(--highlight)] transition-colors flex items-center gap-1.5"
+                      >
+                        <Plus size={14} /> <span className="hidden sm:inline">Add</span>
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* View Full Menu CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 flex justify-center"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-16 text-center"
         >
           <a
             href="/menu"
-            className="group flex items-center gap-4 font-mono-custom text-[10px] tracking-[0.35em] uppercase text-[#5A5040] hover:text-[#C9A96E] transition-colors"
+            className="inline-flex items-center gap-3 px-8 py-3.5 bg-[var(--surface)] border border-[var(--accent)]/30 text-[var(--text)] rounded-2xl font-mono-custom text-xs font-semibold hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
           >
-            <div className="h-px w-12 bg-current transition-all group-hover:w-20" />
-            View Full Menu
-            <div className="h-px w-12 bg-current transition-all group-hover:w-20" />
+            Explore Complete Menu & Coffee Beans &rarr;
           </a>
         </motion.div>
       </div>

@@ -21,19 +21,19 @@ const POSTS = [
 
 export const JournalPreview = () => {
   return (
-    <section className="py-24 sm:py-32 bg-[#08060A] border-t border-[#C9A96E]/15">
+    <section className="py-24 sm:py-32 bg-[var(--bg)] border-t border-[var(--primary)]/15">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-20">
         
         <div className="flex flex-col sm:flex-row justify-between items-end mb-16 gap-6">
           <div>
-            <span className="font-mono-custom text-[#C9A96E] text-[10px] tracking-[0.4em] uppercase block mb-4">
+            <span className="font-mono-custom text-[var(--primary)] text-[10px] tracking-[0.4em] uppercase block mb-4">
               Journal
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-[#EDE4D6]">
-              Dispatches from <br/><em className="text-[#C9A96E]">the Roastery</em>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light text-[var(--text)]">
+              Dispatches from <br/><em className="text-[var(--primary)]">the Roastery</em>
             </h2>
           </div>
-          <a href="#" className="inline-flex items-center gap-3 text-[#C9A96E] font-mono-custom text-[10px] tracking-[0.25em] uppercase hover:text-[#E8CC8A] transition-colors pb-2 border-b border-[#C9A96E]/30 hover:border-[#C9A96E]">
+          <a href="#" className="inline-flex items-center gap-3 text-[var(--primary)] font-mono-custom text-[10px] tracking-[0.25em] uppercase hover:text-[var(--highlight)] transition-colors pb-2 border-b border-[var(--primary)]/30 hover:border-[var(--primary)]">
             Read All Entries <ArrowRight size={14} />
           </a>
         </div>
@@ -48,7 +48,7 @@ export const JournalPreview = () => {
               transition={{ duration: 0.6, delay: i * 0.2 }}
               className="group cursor-pointer flex flex-col md:flex-row gap-6 items-start"
             >
-              <div className="w-full md:w-1/2 aspect-[4/3] overflow-hidden border border-[#C9A96E]/20 relative">
+              <div className="w-full md:w-1/2 aspect-[4/3] overflow-hidden border border-[var(--primary)]/20 relative">
                 <img 
                   src={post.img} 
                   alt={post.title}
@@ -57,19 +57,19 @@ export const JournalPreview = () => {
               </div>
               
               <div className="w-full md:w-1/2 space-y-4 pt-2">
-                <div className="flex items-center gap-3 font-mono-custom text-[9px] uppercase tracking-widest text-[#7A6F65]">
-                  <span className="text-[#C9A96E]">{post.category}</span>
+                <div className="flex items-center gap-3 font-mono-custom text-[9px] uppercase tracking-widest text-[var(--muted)]">
+                  <span className="text-[var(--primary)]">{post.category}</span>
                   <span>•</span>
                   <span>{post.date}</span>
                 </div>
-                <h3 className="font-display text-2xl lg:text-3xl text-[#EDE4D6] leading-tight group-hover:text-[#C9A96E] transition-colors">
+                <h3 className="font-display text-2xl lg:text-3xl text-[var(--text)] leading-tight group-hover:text-[var(--primary)] transition-colors">
                   {post.title}
                 </h3>
-                <p className="text-[#7A6F65] font-light text-sm leading-relaxed">
+                <p className="text-[var(--muted)] font-light text-sm leading-relaxed">
                   {post.excerpt}
                 </p>
                 <div className="pt-2">
-                  <span className="inline-flex items-center gap-2 text-[#C9A96E] font-mono-custom text-[10px] tracking-[0.2em] uppercase group-hover:translate-x-2 transition-transform">
+                  <span className="inline-flex items-center gap-2 text-[var(--primary)] font-mono-custom text-[10px] tracking-[0.2em] uppercase group-hover:translate-x-2 transition-transform">
                     Read More <ArrowRight size={12} />
                   </span>
                 </div>
