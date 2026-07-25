@@ -36,13 +36,12 @@ export const Hero = () => {
       className="relative min-h-screen flex flex-col overflow-hidden"
       style={{ background: 'var(--bg)' }}
     >
-      {/* Background Image — reduced dark overlay so light theme shines */}
+      {/* Background Image */}
       <motion.div className="absolute inset-0" style={{ y: yImg, scale: scaleImg }}>
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1800&q=85')` }}
         />
-        {/* Dark overlay — gives depth over the image */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(10,14,20,0.92) 0%, rgba(10,14,20,0.75) 40%, rgba(10,14,20,0.95) 100%)' }} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,14,20,0.85) 0%, transparent 50%, rgba(10,14,20,0.60) 100%)' }} />
       </motion.div>

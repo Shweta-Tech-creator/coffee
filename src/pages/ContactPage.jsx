@@ -72,6 +72,7 @@ export const ContactPage = () => {
               <p>• <strong className="text-[var(--text)] font-semibold">Underground:</strong> 3-min walk from Victorian Quarter Station</p>
               <p>• <strong className="text-[var(--text)] font-semibold">Bicycle:</strong> Secure bike racks in our courtyard</p>
             </div>
+
           </div>
 
           <div className="lg:col-span-7 p-8 sm:p-10 border border-[var(--primary)]/15 bg-[var(--surface)] rounded-3xl shadow-xl shadow-[var(--primary)]/5">
@@ -146,6 +147,55 @@ export const ContactPage = () => {
             )}
           </div>
         </div>
+      </section>
+
+      {/* Full-Width Google Map Section */}
+      <section className="py-16 px-6 lg:px-20 max-w-[1440px] mx-auto border-t border-[var(--primary)]/10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="space-y-6"
+        >
+          <div className="text-center space-y-2">
+            <span className="font-mono-custom text-[var(--primary)] text-xs tracking-[0.25em] uppercase font-semibold block">Find Us</span>
+            <h2 className="font-display text-3xl sm:text-4xl font-light text-[var(--text)]">Visit Our <span className="text-[var(--primary)] italic">Roastery</span></h2>
+            <p className="text-[var(--muted)] font-light text-sm">42 Artisan Way, Victorian Quarter, London, UK</p>
+          </div>
+
+          <div className="rounded-3xl overflow-hidden border border-[var(--primary)]/20 shadow-2xl shadow-[var(--primary)]/10">
+            <iframe
+              title="Bean Haven Café Full Map"
+              src="https://maps.google.com/maps?q=42+Artisan+Way,+London,+UK&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="480"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="https://maps.google.com/maps?q=42+Artisan+Way,+London,+UK"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-2xl font-mono-custom text-xs font-bold hover:bg-[var(--secondary)] transition-all shadow-md shadow-[var(--primary)]/20 hover:-translate-y-0.5"
+            >
+              <MapPin size={14} /> Open in Google Maps
+            </a>
+            <a
+              href="https://maps.google.com/maps/dir//42+Artisan+Way,+London,+UK"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--primary)]/30 text-[var(--primary)] rounded-2xl font-mono-custom text-xs font-bold hover:bg-[var(--primary)]/10 transition-all hover:-translate-y-0.5"
+            >
+              <Navigation size={14} /> Get Directions
+            </a>
+          </div>
+        </motion.div>
       </section>
 
       {/* Wholesale Partnership CTA */}
