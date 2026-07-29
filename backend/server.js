@@ -25,8 +25,8 @@ app.use('/api/orders', orderRoutes);
 const distPath = path.join(__dirname, '../dist');
 app.use(express.static(distPath));
 
-// SPA Catch-all Route for client-side routing
-app.get('*', (req, res) => {
+// SPA Catch-all Route compatible with Express 5 (path-to-regexp v8)
+app.get('(.*)', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
 

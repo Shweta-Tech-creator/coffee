@@ -1,10 +1,29 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [items, setItems] = useState([]);
+  // Initialize cart items from localStorage so cart survives page reloads
+  const [items, setItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem('bean_haven_cart');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('Failed to load cart from localStorage:', e);
+      return [];
+    }
+  });
+
   const [isOpen, setIsOpen] = useState(false);
+
+  // Sync cart items to localStorage on change
+  useEffect(() => {
+    try {
+      localStorage.setItem('bean_haven_cart', JSON.stringify(items));
+    } catch (e) {
+      console.error('Failed to save cart to localStorage:', e);
+    }
+  }, [items]);
 
   const addToCart = (product) => {
     setItems((prev) => {
@@ -35,7 +54,14 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => {
+    setItems([]);
+    try {
+      localStorage.removeItem('bean_haven_cart');
+    } catch (e) {
+      console.error('Failed to clear cart in localStorage:', e);
+    }
+  };
 
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
