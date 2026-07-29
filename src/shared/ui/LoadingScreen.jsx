@@ -6,22 +6,22 @@ export const LoadingScreen = ({ onComplete }) => {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const steps = [10, 25, 45, 62, 78, 91, 100];
+    const steps = [20, 50, 85, 100];
     let i = 0;
     const tick = () => {
       if (i < steps.length) {
         setProgress(steps[i]);
         i++;
-        setTimeout(tick, 280 + Math.random() * 180);
+        setTimeout(tick, 150 + Math.random() * 80);
       } else {
         setTimeout(() => {
           setDone(true);
-          setTimeout(onComplete, 900);
-        }, 400);
+          setTimeout(onComplete, 600);
+        }, 200);
       }
     };
-    setTimeout(tick, 400);
-  }, []);
+    setTimeout(tick, 200);
+  }, [onComplete]);
 
   return (
     <AnimatePresence>
@@ -29,7 +29,7 @@ export const LoadingScreen = ({ onComplete }) => {
         <motion.div
           key="loader"
           className="fixed inset-0 z-[9999] bg-[var(--bg)] flex flex-col items-center justify-center overflow-hidden"
-          exit={{ opacity: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
+          exit={{ opacity: 0, transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } }}
         >
           {/* Animated radial */}
           <motion.div
@@ -61,7 +61,7 @@ export const LoadingScreen = ({ onComplete }) => {
               <motion.div
                 className="h-full bg-gradient-to-r from-[var(--accent)] via-[var(--primary)] to-[var(--highlight)]"
                 style={{ width: `${progress}%` }}
-                transition={{ duration: 0.5, ease: 'easeOut' }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
               />
             </div>
             <div className="flex justify-between items-center mt-3">
@@ -81,7 +81,7 @@ export const LoadingScreen = ({ onComplete }) => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.4 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 0.4 }}
             className="absolute bottom-12 font-mono-custom text-[var(--muted)] text-[10px] tracking-[0.4em] uppercase"
           >
             Brewing your experience

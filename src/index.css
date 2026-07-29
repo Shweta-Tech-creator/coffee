@@ -81,10 +81,7 @@
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 9999px; }
 
-/* ── Hide cursor on hover-capable devices ── */
-@media (hover: hover) and (pointer: fine) {
-  body, a, button, input, select, textarea { cursor: none; }
-}
+/* ── Default cursor restored ── */
 
 /* ── Grain Texture Overlay ── */
 .grain::before {

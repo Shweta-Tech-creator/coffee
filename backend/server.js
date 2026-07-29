@@ -1,7 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { connectDB } from './config/db.js';
 import orderRoutes from './routes/orderRoutes.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,8 +18,17 @@ app.use(express.json());
 // Database Connection
 connectDB();
 
-// Routes
+// API Routes
 app.use('/api/orders', orderRoutes);
+
+// Serve static frontend build files
+const distPath = path.join(__dirname, '../dist');
+app.use(express.static(distPath));
+
+// SPA Catch-all Route for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
 
 // Start server
 app.listen(PORT, () => {

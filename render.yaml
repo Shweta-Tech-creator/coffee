@@ -1,0 +1,11 @@
+services:
+  # Static Site Deployment for Frontend
+  - type: web
+    name: bean-haven-frontend
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

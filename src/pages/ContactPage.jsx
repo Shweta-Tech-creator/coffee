@@ -163,23 +163,6 @@ export const ContactPage = () => {
         </div>
       </section>
 
-
-      {/* Wholesale Partnership CTA */}
-      <section className="py-20 px-6 lg:px-20 max-w-[1440px] mx-auto border-t border-[var(--primary)]/10">
-        <div className="bg-[var(--surface)] border border-[var(--primary)]/20 rounded-3xl p-10 text-center max-w-3xl mx-auto space-y-4 shadow-lg shadow-[var(--primary)]/5">
-          <Coffee size={32} className="text-[var(--primary)] mx-auto" />
-          <h3 className="font-display text-3xl text-[var(--text)] font-medium">Wholesale Coffee Partnerships</h3>
-          <p className="text-sm text-[var(--muted)] font-light max-w-lg mx-auto leading-relaxed">
-            We supply restaurants, boutique hotels, and specialty coffee bars with custom roast profiles and barista training.
-          </p>
-          <a
-            href="mailto:wholesale@beanhaven.co.uk"
-            className="inline-block px-8 py-3.5 bg-[var(--primary)] text-white rounded-2xl font-mono-custom text-xs font-bold hover:bg-[var(--secondary)] transition-all shadow-md shadow-[var(--primary)]/20 hover:-translate-y-0.5"
-          >
-            Inquire For Wholesale
-          </a>
-        </div>
-      </section>
     </div>
   );
 };
