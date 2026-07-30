@@ -1,11 +1,14 @@
 services:
-  # Static Site Deployment for Frontend
+  # Node Web Service for full-stack deployment on Render
   - type: web
-    name: bean-haven-frontend
-    env: static
+    name: bean-haven-coffee
+    env: node
     buildCommand: npm run build
-    staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    startCommand: node backend/server.js
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: MONGO_URI
+        sync: false

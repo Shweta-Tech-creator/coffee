@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { connectDB } from './config/db.js';
 import orderRoutes from './routes/orderRoutes.js';
+import chatRoutes from './routes/chatRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +21,7 @@ connectDB();
 
 // API Routes
 app.use('/api/orders', orderRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Serve static frontend build files
 const distPath = path.join(__dirname, '../dist');
