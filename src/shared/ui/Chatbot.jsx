@@ -230,8 +230,8 @@ export const Chatbot = () => {
 
             {/* Messages & Suggested Questions */}
             <div
-              className="h-[380px] overflow-y-auto px-4 py-4 space-y-3"
-              style={{ scrollbarWidth: 'thin', overscrollBehavior: 'contain' }}
+              className="h-[380px] overflow-y-auto px-4 py-4 space-y-3 no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', overscrollBehavior: 'contain' }}
               onWheel={(e) => e.stopPropagation()}
             >
               {/* Welcome message */}
